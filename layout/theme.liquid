@@ -4,60 +4,56 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>
-    {{ page_title }}{% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}
-  </title>
+  <title>{{ page_title }}{% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}</title>
   <meta name="description" content="{{ page_description | escape }}">
   <link rel="canonical" href="{{ canonical_url }}">
   <meta name="theme-color" content="#ffffff">
 
-  {# Open Graph básico #}
+  {# Open Graph + Twitter Card #}
   <meta property="og:site_name" content="{{ shop.name }}">
   <meta property="og:url" content="{{ canonical_url }}">
   <meta property="og:title" content="{{ page_title }}">
   <meta property="og:description" content="{{ page_description | escape }}">
-  {%- if product.featured_media -%}
-    <meta property="og:image" content="{{ product.featured_media | image_url: width: 1200 }}">
-  {%- elsif collection.image -%}
-    <meta property="og:image" content="{{ collection.image | image_url: width: 1200 }}">
-  {%- elsif shop.brand.logo -%}
-    <meta property="og:image" content="{{ shop.brand.logo | image_url: width: 1200 }}">
+  {%- assign og_image = product.featured_media | default: collection.image | default: shop.brand.logo -%}
+  {%- if og_image -%}
+    <meta property="og:image" content="{{ og_image | image_url: width: 1200 }}">
+    <meta property="twitter:card" content="summary_large_image">
   {%- endif -%}
 
-  {{ content_for_header }}  {# ← Requerido por Shopify #}
+  {{ content_for_header }}  {# REQUIRED BY SHOPIFY #}
 
-  {{ 'theme.js' | asset_url | script_tag }}
-  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {# CSS critical path #}
+  {{ 'tailwind.css' | asset_url | stylesheet_tag }}
+  {{ 'theme.css'  | asset_url | stylesheet_tag }}
 
+  {# Fonts #}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
-  <script>
-    document.documentElement.classList.add('js');
-  </script>
-
   <style>
-    :root {
-      --color-primary: #8e2de2;
-      --color-secondary: #4a00e0;
-      --color-accent: #f59e0b;
-      --font-body: 'Inter', sans-serif;
+    :root{
+      --color-primary:#8e2de2;
+      --color-secondary:#4a00e0;
+      --color-accent:#f59e0b;
+      --font-body:'Inter',sans-serif;
     }
-    body { font-family: var(--font-body); }
-    .nutrivet-gradient { background: linear-gradient(90deg, var(--color-primary), var(--color-secondary)); }
+    body{font-family:var(--font-body);}
+    .nutrivet-gradient{background:linear-gradient(90deg,var(--color-primary),var(--color-secondary))}
   </style>
+
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body class="bg-gray-50 text-gray-900 antialiased">
-  <a class="sr-only focus:not-sr-only" href="#MainContent">Saltar al contenido</a>
+  <a class="sr-only focus:not-sr-only" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
 
   <header class="bg-white shadow-sm sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center space-x-4">
-          <a href="/" class="flex items-center space-x-2">
+          <a href="{{ routes.root_url }}" class="flex items-center space-x-2">
             <div class="w-10 h-10 nutrivet-gradient rounded-lg flex items-center justify-center">
               <i class="fas fa-paw text-white text-xl"></i>
             </div>
@@ -77,10 +73,10 @@
         {%- endif -%}
 
         <div class="flex items-center space-x-4">
-          <a href="/search" class="text-gray-600 hover:text-gray-900" aria-label="Buscar">
+          <a href="{{ routes.search_url }}" class="text-gray-600 hover:text-gray-900" aria-label="Buscar">
             <i class="fas fa-search text-lg"></i>
           </a>
-          <a href="/cart" class="text-gray-600 hover:text-gray-900 relative" aria-label="Carrito">
+          <a href="{{ routes.cart_url }}" class="text-gray-600 hover:text-gray-900 relative" aria-label="Carrito">
             <i class="fas fa-shopping-cart text-lg"></i>
             {%- assign items = cart.items | size -%}
             <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center {% if items == 0 %}hidden{% endif %}">
@@ -93,7 +89,7 @@
   </header>
 
   <main role="main" id="MainContent">
-    {{ content_for_layout }}  {# ← Requerido por Shopify #}
+    {{ content_for_layout }}  {# REQUIRED BY SHOPIFY #}
   </main>
 
   <footer class="bg-gray-900 text-white">
@@ -112,10 +108,10 @@
         <div>
           <h4 class="font-semibold mb-4">Productos</h4>
           <ul class="space-y-2 text-gray-400 text-sm">
-            <li><a href="/collections/all" class="hover:text-white">Multivitamínicos</a></li>
-            <li><a href="/collections/all" class="hover:text-white">Probióticos</a></li>
-            <li><a href="/collections/all" class="hover:text-white">Suplementos</a></li>
-            <li><a href="/collections/all" class="hover:text-white">Cuidado Dental</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}" class="hover:text-white">Multivitamínicos</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}" class="hover:text-white">Probióticos</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}" class="hover:text-white">Suplementos</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}" class="hover:text-white">Cuidado Dental</a></li>
           </ul>
         </div>
 
@@ -124,9 +120,9 @@
           <ul class="space-y-2 text-gray-400 text-sm">
             {%- assign faq_page = pages['faq'] -%}
             <li><a href="{{ faq_page.url }}" class="hover:text-white">Preguntas Frecuentes</a></li>
-            <li><a href="/pages/shipping" class="hover:text-white">Envíos y Devoluciones</a></li>
-            <li><a href="/pages/guarantee" class="hover:text-white">Garantía</a></li>
-            <li><a href="/pages/contact" class="hover:text-white">Contacto</a></li>
+            <li><a href="{{ routes.root_url }}pages/shipping" class="hover:text-white">Envíos y Devoluciones</a></li>
+            <li><a href="{{ routes.root_url }}pages/guarantee" class="hover:text-white">Garantía</a></li>
+            <li><a href="{{ routes.root_url }}pages/contact" class="hover:text-white">Contacto</a></li>
           </ul>
         </div>
 
@@ -154,8 +150,9 @@
     </div>
   </footer>
 
-  {{ 'theme.js' | asset_url | script_tag }}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+  {# JS deferred #}
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  <script src="{{ 'lazysizes.min.js' | asset_url }}" defer></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
