@@ -1,0 +1,61 @@
+{% if section.settings.show_reviews %}
+<div class="bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">{{ section.settings.heading }}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for block in section.blocks %}
+        {% if block.type == 'review' %}
+        <div class="bg-white rounded-xl p-6 shadow">
+          <div class="flex items-center mb-4">
+            {% if block.settings.avatar != blank %}
+            <img src="{{ block.settings.avatar | img_url: '100x100' }}" alt="{{ block.settings.name }}" class="w-12 h-12 rounded-full mr-3">
+            {% else %}
+            <img src="https://ui-avatars.com/api/?name={{ block.settings.name | url_encode }}&background=random" alt="{{ block.settings.name }}" class="w-12 h-12 rounded-full mr-3">
+            {% endif %}
+            <div>
+              <p class="font-semibold text-gray-900">{{ block.settings.name }}</p>
+              <div class="flex text-yellow-400 text-sm">
+                {% for i in (1..5) %}
+                  {% if i <= block.settings.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-700">{{ block.settings.comment }}</p>
+          {% if block.settings.photo != blank %}
+          <div class="mt-4">
+            <img src="{{ block.settings.photo | img_url: '300x300' }}" alt="Review photo by {{ block.settings.name }}" class="w-full rounded-lg">
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+{% schema %}
+{
+"name": "Product Reviews",
+"settings": [
+{ "type": "checkbox", "id": "show_reviews", "label": "Show reviews section", "default": true },
+{ "type": "text", "id": "heading", "label": "Heading", "default": "Customer Reviews" },
+{ "type": "range", "id": "per_row", "label": "Reviews per row", "min": 2, "max": 4, "step": 1, "default": 3 },
+{ "type": "color", "id": "bg_color", "label": "Background Color", "default": "#f9fafb" }
+],
+"blocks": [
+{
+"type": "review",
+"name": "Review",
+"settings": [
+{ "type": "text", "id": "name", "label": "Reviewer Name", "default": "Jane D." },
+{ "type": "range", "id": "rating", "label": "Star Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+{ "type": "textarea", "id": "comment", "label": "Review Text", "default": "Amazing product!" },
+{ "type": "image_picker", "id": "avatar", "label": "Avatar (optional)" },
+{ "type": "image_picker", "id": "photo", "label": "Review Photo (optional)" }
+]
+}
+],
+"presets": [{"name": "Product Reviews"}]
+}
+{% endschema %}
