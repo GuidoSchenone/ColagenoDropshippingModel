@@ -1,1 +1,58 @@
+{%- comment -%}
+  snippets/variant-selector.liquid
+  Dynamically renders one <select> per product option (size, flavour, etc.)
+  Updates the hidden variant-id input automatically.
+  Fully Tailwind-styled & accessible.
+  Usage: {% render 'variant-selector', product: product %}
+{%- endcomment -%}
 
+{%- if product.has_only_default_variant -%}
+  {{ product.selected_or_first_available_variant.id }}
+{%- else -%}
+
+  {%- form 'product', product, id: 'product-form-' | append: product.id -%}
+    <input type="hidden"
+           name="id"
+           value="{{ product.selected_or_first_available_variant.id }}"
+           data-variant-selector-target="idInput">
+
+    {%- for option in product.options_with_values -%}
+      <div class="mb-4">
+        <label for="Option-{{ product.id }}-{{ forloop.index0 }}"
+               class="block text-sm font-medium text-gray-700 mb-1">
+          {{ option.name }}
+        </label>
+        <select id="Option-{{ product.id }}-{{ forloop.index0 }}"
+                name="options[{{ option.name | escape }}]"
+                data-index="option{{ forloop.index }}"
+                class="variant-select w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+          {%- for value in option.values -%}
+            <option value="{{ value | escape }}"
+              {% if option.selected_value == value %}selected{% endif %}>
+              {{ value }}
+            </option>
+          {%- endfor -%}
+        </select>
+      </div>
+    {%- endfor -%}
+  {%- endform -%}
+
+  <script>
+    (function() {
+      const form = document.querySelector('#product-form-{{ product.id }}');
+      const idInput = form.querySelector('[data-variant-selector-target="idInput"]');
+      const selects = form.querySelectorAll('.variant-select');
+
+      function updateVariantId() {
+        const selectedOptions = Array.from(selects).map(s => s.value);
+        const variant = {{ product.variants | json }}.find(v => {
+          return selectedOptions.every((opt, i) => v.options[i] === opt);
+        });
+        if (variant) idInput.value = variant.id;
+      }
+
+      selects.forEach(s => s.addEventListener('change', updateVariantId));
+    })();
+  </script>
+
+{%- endif -%}
