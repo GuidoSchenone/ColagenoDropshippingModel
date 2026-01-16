@@ -1,0 +1,5 @@
+{% if section.settings.enable %}<div id="sticky-atc" class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg z-40 transform translate-y-full transition-transform"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between"><div><div class="text-lg font-bold text-gray-900"><div class="text-xs text-gray-600"><button type="submit" name="add" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-lg font-bold">
+<script>window.addEventListener('scroll',()=>{const bar=document.getElementById('sticky-atc');if(window.scrollY>400)bar.classList.remove('translate-y-full');else bar.classList.add('translate-y-full');});</script>{% endif %}
+{% schema %}
+{"name":"Sticky Add to Cart","settings":[{"type":"checkbox","id":"enable","label":"Enable sticky bar","default":true},{"type":"text","id":"button_text","label":"Button text","default":"Comprar Ahora"},{"type":"text","id":"shipping_text","label":"Shipping text","default":"Envío gratis"}]}
+{% endschema %}
