@@ -1,1 +1,36 @@
-
+{
+  "sections": {
+    "main-product": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "product-benefits": {
+      "type": "product-benefits",
+      "settings": {}
+    },
+    "product-reviews": {
+      "type": "product-reviews",
+      "settings": {}
+    },
+    "product-faq": {
+      "type": "product-faq",
+      "settings": {}
+    },
+    "product-social-proof": {
+      "type": "product-social-proof",
+      "settings": {}
+    },
+    "product-sticky-atc": {
+      "type": "product-sticky-atc",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-product",
+    "product-benefits",
+    "product-reviews",
+    "product-faq",
+    "product-social-proof",
+    "product-sticky-atc"
+  ]
+}
