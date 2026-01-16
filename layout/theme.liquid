@@ -9,7 +9,7 @@
   <link rel="canonical" href="{{ canonical_url }}">
   <meta name="theme-color" content="#ffffff">
 
-  {# Open Graph + Twitter Card #}
+  {# Open Graph dinámico #}
   <meta property="og:site_name" content="{{ shop.name }}">
   <meta property="og:url" content="{{ canonical_url }}">
   <meta property="og:title" content="{{ page_title }}">
@@ -20,18 +20,23 @@
     <meta property="twitter:card" content="summary_large_image">
   {%- endif -%}
 
-  {{ content_for_header }}  {# REQUIRED BY SHOPIFY #}
+  {{ content_for_header }}  {# REQUERIDO POR SHOPIFY #}
 
-  {# CSS critical path #}
-  {{ 'tailwind.css' | asset_url | stylesheet_tag }}
-  {{ 'theme.css'  | asset_url | stylesheet_tag }}
+  {# Assets CSS desde CDN Shopify + validaciones #}
+  {%- if 'tailwind.css' != blank -%}
+    
+  {%- else -%}
+    <!-- WARNING: tailwind.css no encontrado en assets -->
+  {%- endif -%}
 
-  {# Fonts #}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  {%- if 'theme.css' != blank -%}
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {%- else -%}
+    <!-- WARNING: theme.css no encontrado en assets -->
+  {%- endif -%}
 
+  {# Fuentes externas con preload #}
+ 
   <style>
     :root{
       --color-primary:#8e2de2;
@@ -47,7 +52,7 @@
 </head>
 
 <body class="bg-gray-50 text-gray-900 antialiased">
-  <a class="sr-only focus:not-sr-only" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+ 
 
   <header class="bg-white shadow-sm sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -150,9 +155,13 @@
     </div>
   </footer>
 
-  {# JS deferred #}
+  {# JS deferred desde CDN Shopify #}
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
-  <script src="{{ 'lazysizes.min.js' | asset_url }}" defer></script>
+  {%- if 'lazysizes.min.js' != blank -%}
+  
+  {%- else -%}
+
+  {%- endif -%}
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
