@@ -1,1 +1,150 @@
+/* ==========================================
+   THEME.CSS – Vithalia-style overrides
+   Designed to work WITH Tailwind CSS
+   ========================================== */
 
+/* ---------- ROOT & DESIGN TOKENS ---------- */
+:root {
+  --color-primary: #8e2de2;
+  --color-secondary: #4a00e0;
+  --color-accent: #f59e0b;
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-text: #111827;
+  --color-muted: #6b7280;
+  --color-bg: #f9fafb;
+  --radius: 0.75rem;
+  --shadow-card: 0 10px 15px -3px rgba(0,0,0,.07), 0 4px 6px -2px rgba(0,0,0,.05);
+  --shadow-hover: 0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04);
+  --transition: all .25s cubic-bezier(.4,0,.2,1);
+}
+
+/* ---------- BASE TYPOGRAPHY ---------- */
+body { font-family: 'Inter', sans-serif; color: var(--color-text); }
+
+h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: -0.025em; }
+h1 { font-size: 2rem; line-height: 1.2; }
+h2 { font-size: 1.5rem; line-height: 1.3; }
+h3 { font-size: 1.25rem; line-height: 1.4; }
+
+p { line-height: 1.6; }
+
+/* ---------- HEADER ---------- */
+header { border-bottom: 1px solid #e5e7eb; }
+header .nutrivet-gradient { box-shadow: 0 2px 4px rgba(142,45,226,.15); }
+
+/* ---------- PRODUCT GALLERY ---------- */
+.product-gallery-main { border-radius: var(--radius); overflow: hidden; }
+.thumbnail {
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  transition: var(--transition);
+}
+.thumbnail:hover { border-color: var(--color-primary); }
+.thumbnail.active { border-color: var(--color-primary); box-shadow: 0 0 0 2px rgba(142,45,226,.3); }
+
+/* ---------- BUTTONS ---------- */
+.btn-primary {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+}
+.btn-primary:hover { opacity: .9; box-shadow: var(--shadow-hover); }
+
+.quantity-btn {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.quantity-btn:hover { background: #f3f4f6; }
+
+.sticky-atc-btn {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.sticky-atc-btn:hover { opacity: .9; }
+
+/* ---------- BADGES ---------- */
+.badge-discount {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.badge-trust {
+  background: #f0fdf4;
+  color: #16a34a;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* ---------- TABS ---------- */
+.tab-button {
+  border-bottom: 2px solid transparent;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: #6b7280;
+  transition: var(--transition);
+}
+.tab-button.active { color: var(--color-primary); border-color: var(--color-primary); }
+.tab-button:hover:not(.active) { color: var(--color-secondary); }
+
+/* ---------- REVIEWS ---------- */
+.review-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+}
+.review-card:hover { box-shadow: var(--shadow-hover); }
+.review-avatar { width: 3rem; height: 3rem; border-radius: 50%; object-fit: cover; }
+.stars { color: #fbbf24; }
+
+/* ---------- FAQ ACCORDION ---------- */
+.accordion-item { border: 1px solid #e5e7eb; border-radius: 0.5rem; overflow: hidden; }
+.accordion-button { background: #fff; width: 100%; text-align: left; padding: 1rem 1.25rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: var(--transition); }
+.accordion-button:hover { background: #f9fafb; }
+.accordion-content { padding: 0 1.25rem 1rem; background: #fff; }
+.accordion-icon { transition: transform .25s; }
+.accordion-button[aria-expanded="true"] .accordion-icon { transform: rotate(180deg); }
+
+/* ---------- FOOTER ---------- */
+footer { background: #111827; color: #f9fafb; }
+footer a { color: #9ca3af; transition: var(--transition); }
+footer a:hover { color: #fff; }
+.social-icon { font-size: 1.25rem; }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .product-gallery-main { margin-bottom: 1rem; }
+  .thumbnail { border-width: 1px; }
+  h1 { font-size: 1.5rem; }
+  .btn-primary { font-size: 1rem; padding: .75rem 1rem; }
+  .review-card { padding: 1rem; }
+}
+
+@media (min-width: 1024px) {
+  .product-gallery-main { min-height: 32rem; }
+}
