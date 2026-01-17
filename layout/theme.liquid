@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="{{ request.locale.iso_code }}">
+
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>{{ page_title }}{% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}</title>
   <meta name="description" content="{{ page_description | escape }}">
   <link rel="canonical" href="{{ canonical_url }}">
-  <meta name="theme-color" content="#ffffff">
 
-  {# Open Graph dinámico #}
+  {% comment %} Open Graph {% endcomment %}
   <meta property="og:site_name" content="{{ shop.name }}">
   <meta property="og:url" content="{{ canonical_url }}">
   <meta property="og:title" content="{{ page_title }}">
   <meta property="og:description" content="{{ page_description | escape }}">
-  {%- assign og_image = product.featured_media | default: collection.image | default: shop.brand.logo -%}
-  {%- if og_image -%}
-    <meta property="og:image" content="{{ og_image | image_url: width: 1200 }}">
-    <meta property="twitter:card" content="summary_large_image">
-  {%- endif -%}
 
-  {{ content_for_header }}  {# REQUERIDO POR SHOPIFY #}
+  {{ content_for_header }}
 
-  {# Assets CSS desde CDN Shopify + validaciones #}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  {{ content_for_header }}  
+{% comment %}
+Assets CSS desde CDN Shopify + validaciones
+{% endcomment %}
+
+{% comment %}
+Open Graph dinámico
+{% endcomment %}
+
   {%- if 'tailwind.css' != blank -%}
     
   {%- else -%}
@@ -34,8 +39,10 @@
   {%- else -%}
     <!-- WARNING: theme.css no encontrado en assets -->
   {%- endif -%}
-
-  {# Fuentes externas con preload #}
+{% comment %}
+Fuentes externas con preload
+{% endcomment %}
+ 
  
   <style>
     :root{
@@ -94,7 +101,7 @@
   </header>
 
   <main role="main" id="MainContent">
-    {{ content_for_layout }}  {# REQUIRED BY SHOPIFY #}
+    {{ content_for_layout }}  
   </main>
 
   <footer class="bg-gray-900 text-white">
@@ -154,9 +161,11 @@
       </div>
     </div>
   </footer>
+{% comment %}
+JS deferred desde CDN Shopif
+{% endcomment %}
 
-  {# JS deferred desde CDN Shopify #}
-  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+   <script src="{{ 'theme.js' | asset_url }}" defer></script>
   {%- if 'lazysizes.min.js' != blank -%}
   
   {%- else -%}
