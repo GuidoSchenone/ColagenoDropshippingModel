@@ -1,21 +1,13 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "sections": {
-    "hero": {
-      "type": "landing-nutrivet",
-      "settings": {
-        "product_img_1": "https://cdn.shopify.com/s/files/1/0759/6962/6309/files/landing-product-browser1.png?v=1768590451",
-        "product_img_2": "https://cdn.shopify.com/s/files/1/0759/6962/6309/files/landing-product-browser2.png?v=1768590453",
-        "product_img_3": "https://cdn.shopify.com/s/files/1/0759/6962/6309/files/landing-product-browser3.png?v=1768590450",
-        "product_img_4": "https://cdn.shopify.com/s/files/1/0759/6962/6309/files/landing-product-browser4.png?v=1768590451",
-        "horizontal_frame": "https://cdn.shopify.com/s/files/1/0759/6962/6309/files/mid-section1.png?v=1768590451",
-        "footer_img_1": "https://cdn.shopify.com/s/files/1/0759/6962/6309/files/cambios-section-before.png?v=1768590451",
-        "footer_img_2": "https://cdn.shopify.com/s/files/1/0759/6962/6309/files/cambios-section-after.png?v=1768590451",
-        "footer_img_3": "https://cdn.shopify.com/s/files/1/0759/6962/6309/files/valeria-Comment.png?v=1768590450",
-        "footer_img_4": "https://cdn.shopify.com/s/files/1/0759/6962/6309/files/Raul-comment.png?v=1768590451"
-      }
-    }
-  },
-  "order": [
-    "hero"
-  ]
+  "sections": {},
+  "order": []
 }
